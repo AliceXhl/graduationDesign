@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hf.springbootinit.mapper.EchartMapper">
+
+    <resultMap id="BaseResultMap" type="com.hf.springbootinit.model.entity.EchartParam">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="photo" column="photo" jdbcType="VARCHAR"/>
+        <result property="heartdisease" column="heartDisease" jdbcType="VARCHAR"/>
+        <result property="bmi" column="BMI" jdbcType="VARCHAR"/>
+        <result property="smoking" column="smoking" jdbcType="VARCHAR"/>
+        <result property="drinking" column="drinking" jdbcType="VARCHAR"/>
+        <result property="stroke" column="stroke" jdbcType="VARCHAR"/>
+        <result property="physicalhealth" column="physicalHealth" jdbcType="FLOAT"/>
+        <result property="mentalhealth" column="mentalHealth" jdbcType="FLOAT"/>
+        <result property="diffwalking" column="diffWalking" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="OTHER"/>
+        <result property="agecategory" column="ageCategory" jdbcType="VARCHAR"/>
+        <result property="race" column="race" jdbcType="VARCHAR"/>
+        <result property="diabetic" column="diabetic" jdbcType="VARCHAR"/>
+        <result property="physicalactivity" column="physicalActivity" jdbcType="VARCHAR"/>
+        <result property="genhealth" column="genHealth" jdbcType="VARCHAR"/>
+        <result property="sleeptime" column="sleepTime" jdbcType="INTEGER"/>
+        <result property="asthma" column="asthma" jdbcType="VARCHAR"/>
+        <result property="kidneydisease" column="kidneyDisease" jdbcType="VARCHAR"/>
+        <result property="skincancer" column="skinCancer" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="groupid" column="groupId" jdbcType="INTEGER"/>
+        <result property="isdelete" column="isDelete" jdbcType="OTHER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,photo,
+        heartDisease,BMI,smoking,
+        drinking,stroke,physicalHealth,
+        mentalHealth,diffWalking,sex,
+        ageCategory,race,diabetic,
+        physicalActivity,genHealth,sleepTime,
+        asthma,kidneyDisease,skinCancer,
+        createTime,groupId,isDelete
+    </sql>
+    <select id="sufHealCount" resultType="java.util.Map">
+        SELECT
+            SUM(CASE WHEN heartdisease = 'no' THEN 1 ELSE 0 END) AS total_no,
+            SUM(CASE WHEN heartdisease = 'yes' THEN 1 ELSE 0 END) AS total_yes
+        FROM heartdata;
+    </select>
+    <select id="userInfo" resultType="com.hf.springbootinit.model.entity.EchartParam">
+        SELECT * FROM heartdata ORDER BY createTime,id DESC LIMIT 20;
+    </select>
+</mapper>
